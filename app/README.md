@@ -221,7 +221,6 @@ Unchanged sources are skipped; a changed file becomes a new version and the old 
 
 - **Different language model:** set `LLM_MODEL` to any Ollama model you have pulled (larger Qwen3 models give better
   wording and Arabic). `OLLAMA_URL` and `OLLAMA_NUM_CTX` change the server address and context size.
-- **No AI:** `LLM_PROVIDER=mock` skips the language model; every agent uses template wording written by code.
 - **Another provider:** add a module in `backend/ai/providers/` exposing
   `generate(system_prompt, payload, schema, model, timeout)` and set `LLM_PROVIDER` to its name.
 - **Embedding model:** `EMBEDDING_MODEL` changes the model; rebuild embeddings afterwards.
