@@ -1,6 +1,5 @@
-# HealthBridge
+# HealthBridge: A Multi-Agent Framework with Neuro-Inspired Evidence Scoring for Cross-Border Healthcare 
 
-**Cross-border healthcare continuity for patients travelling from India to the United Arab Emirates.**
 
 ## The problem
 
