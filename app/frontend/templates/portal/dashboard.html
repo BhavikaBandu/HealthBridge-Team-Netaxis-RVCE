@@ -1,0 +1,50 @@
+{% extends 'portal/app_base.html' %}
+{% block heading %}Welcome back, {{ (full_name or 'there').split()[0] }}!{% endblock %}
+{% block subheading %}Manage your healthcare information and travel journeys.{% endblock %}
+{% block content %}
+<div id="profileBanner" class="alert alert-warning d-none d-flex align-items-center gap-2" role="status">
+  <i class="bi bi-person-exclamation fs-5"></i>
+  <div class="flex-grow-1">Your profile is incomplete: <span id="missingFields"></span>.</div>
+  <a href="/profile" class="btn btn-sm btn-outline-dark">Complete profile</a>
+</div>
+
+<div class="row g-4">
+  <div class="col-xl-8">
+    <div id="tripHero" class="trip-hero"><div class="skeleton" style="height:150px;opacity:.3"></div></div>
+
+    <div class="row g-3 mt-1" id="stats">
+      <div class="col-6 col-md-3"><a class="hb-card stat-card" href="/medical-history?tab=medications"><span class="icon-tile"><i class="bi bi-capsule"></i></span>
+        <div><div class="num" data-count="medications">–</div><div class="lbl">Medications</div></div></a></div>
+      <div class="col-6 col-md-3"><a class="hb-card stat-card" href="/medical-history?tab=conditions"><span class="icon-tile"><i class="bi bi-heart-pulse"></i></span>
+        <div><div class="num" data-count="conditions">–</div><div class="lbl">Conditions</div></div></a></div>
+      <div class="col-6 col-md-3"><a class="hb-card stat-card" href="/medical-history?tab=procedures"><span class="icon-tile"><i class="bi bi-bandaid"></i></span>
+        <div><div class="num" data-count="procedures">–</div><div class="lbl">Procedures</div></div></a></div>
+      <div class="col-6 col-md-3"><a class="hb-card stat-card" href="/documents"><span class="icon-tile"><i class="bi bi-file-earmark-text"></i></span>
+        <div><div class="num" data-count="documents">–</div><div class="lbl">Documents</div></div></a></div>
+    </div>
+
+  </div>
+
+  <div class="col-xl-4">
+    <div class="hb-card">
+      <div class="hb-card-body">
+        <h2 class="hb-card-title mb-3">Quick Actions</h2>
+        <div class="d-grid gap-2">
+          <a class="qa-btn" href="/trips?new=1"><i class="bi bi-airplane"></i>Create New Trip</a>
+          <a class="qa-btn" href="/medical-history?tab=medications&new=1"><i class="bi bi-capsule"></i>Add Medication</a>
+          <a class="qa-btn" href="/documents?new=1"><i class="bi bi-cloud-arrow-up"></i>Upload Document</a>
+        </div>
+      </div>
+    </div>
+    <div class="hb-card privacy-card mt-4">
+      <div class="hb-card-body py-4">
+        <span class="shield mb-3"><i class="bi bi-shield-lock"></i></span>
+        <div class="fw-semibold">Your records are private to your account</div>
+        <div class="small hb-muted mt-1">Only you can see your trips, medical history and documents while signed in.
+          Only permitted doctors can view them.</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/dashboard.js?v={{ v }}"></script>{% endblock %}

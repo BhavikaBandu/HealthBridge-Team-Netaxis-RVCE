@@ -1,0 +1,67 @@
+{% extends 'portal/app_base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-xl-8">
+    <div class="hb-card">
+      <div class="hb-card-body">
+        <div class="d-flex flex-wrap align-items-center gap-3 pb-3 mb-2 border-bottom">
+          <span class="hb-avatar-lg" id="avatar">{{ (full_name or 'P')[0]|upper }}</span>
+          <div class="flex-grow-1">
+            <div class="fs-5 fw-semibold" id="nameHeading">{{ full_name }}</div>
+            <div class="d-flex align-items-center gap-2 small hb-muted">Patient ID: <span class="fw-semibold text-body">{{ public_id }}</span>
+              <button type="button" class="btn btn-sm btn-light-teal py-0 px-2" data-copy="{{ public_id }}" data-copy-label="Patient ID" aria-label="Copy patient ID"><i class="bi bi-copy"></i></button></div>
+          </div>
+          <button type="button" class="btn btn-outline-primary" id="editBtn"><i class="bi bi-pencil me-1"></i>Edit profile</button>
+        </div>
+
+        <div id="profileView"><div class="skeleton my-3" style="height:120px"></div></div>
+
+        <form id="profileForm" class="d-none mt-2" novalidate>
+          <div class="form-alert alert alert-danger small d-none" role="alert"></div>
+          <div class="row g-3">
+            <div class="col-md-6"><label class="form-label" for="full_name">Full name <span class="req">*</span></label>
+              <input class="form-control" id="full_name" name="full_name" autocomplete="name" maxlength="120" required></div>
+            <div class="col-md-6"><label class="form-label" for="email">Email <span class="req">*</span></label>
+              <input class="form-control" id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+              <div class="form-text">Changing your email signs you in with the new address next time.</div></div>
+            <div class="col-md-6"><label class="form-label" for="phone">Phone number</label>
+              <input class="form-control" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" maxlength="30">
+              <div class="form-text">Include the country code.</div></div>
+            <div class="col-md-6"><label class="form-label" for="origin_country">Origin country</label>
+              <select class="form-select" id="origin_country" name="origin_country"></select></div>
+            <div class="col-md-6"><label class="form-label" for="preferred_language">Preferred language</label>
+              <select class="form-select" id="preferred_language" name="preferred_language">
+                <option value="">Select language</option><option value="en">English</option><option value="ar">Arabic</option></select>
+              <div class="form-text">Saved for later; the portal is shown in English for now.</div></div>
+          </div>
+          <div class="d-flex gap-2 justify-content-end mt-4">
+            <button type="button" class="btn btn-light" id="cancelEdit">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveProfile">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-4">
+    <div class="hb-card">
+      <div class="hb-card-body">
+        <div class="d-flex gap-3 align-items-start">
+          <span class="icon-tile"><i class="bi bi-lock"></i></span>
+          <div>
+            <h2 class="hb-card-title">Change Password</h2>
+            <p class="small hb-muted mt-1 mb-3">Update your password to keep your account secure.</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#pwModal">Change Password <i class="bi bi-chevron-right ms-1"></i></button>
+      </div>
+    </div>
+    <div class="hb-card mt-4" id="completeness">
+      <div class="hb-card-body small"></div>
+    </div>
+  </div>
+</div>
+
+{% include 'portal/_password_modal.html' %}
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/password_modal.js?v={{ v }}"></script><script src="/static/portal/js/profile.js?v={{ v }}"></script>{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'portal/app_base.html' %}
+{% block content %}
+<!-- Overview: find a patient, request access, pending invitations -->
+<div id="overview">
+  <div class="hb-card mb-4">
+    <div class="hb-card-body">
+      <h2 class="hb-card-title mb-1"><i class="bi bi-search text-primary"></i>Open Patient Records</h2>
+      <p class="small hb-muted mb-3">Search patients who have accepted your access request. The patient opens in the side panel.</p>
+      <div class="patient-picker">
+        <div class="input-group">
+          <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+          <input class="form-control" id="patientSearch" type="search" role="combobox" aria-expanded="false" aria-controls="pickerList"
+                 aria-autocomplete="list" autocomplete="off" placeholder="Type patient name or ID" aria-label="Search patients">
+        </div>
+        <div class="picker-list d-none" id="pickerList" role="listbox" aria-label="Patients who granted you access"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-xl-5" id="request">
+      <div class="hb-card h-100"><div class="hb-card-body">
+        <h2 class="hb-card-title mb-1"><i class="bi bi-person-plus text-primary"></i>Request Patient Access</h2>
+        <p class="small hb-muted mb-3">Send an access request to a patient using their Patient ID.</p>
+        <form id="requestForm" novalidate>
+          <div class="form-alert alert alert-danger small d-none" role="alert"></div>
+          <label class="form-label" for="patient_id">Patient ID <span class="req">*</span></label>
+          <div class="patient-picker mb-3">
+            <div class="input-group">
+              <span class="input-group-text bg-white"><i class="bi bi-person-vcard"></i></span>
+              <input class="form-control" id="patient_id" name="patient_id" placeholder="Enter patient ID" maxlength="20" autocomplete="off"
+                     style="text-transform:uppercase" role="combobox" aria-expanded="false" aria-controls="lookupList" aria-autocomplete="list">
+            </div>
+            <div class="picker-list d-none" id="lookupList" role="listbox" aria-label="Matching patients"></div>
+          </div>
+          <button class="btn btn-primary w-100" type="submit" id="sendBtn"><i class="bi bi-send me-1"></i>Send Access Request</button>
+          <div id="requestOk" class="alert alert-success small mt-3 mb-0 d-none" role="status"></div>
+        </form>
+      </div></div>
+    </div>
+    <div class="col-xl-7" id="pending">
+      <div class="hb-card h-100"><div class="hb-card-body">
+        <h2 class="hb-card-title mb-1"><i class="bi bi-envelope text-primary"></i>Pending Invitations</h2>
+        <p class="small hb-muted mb-3">Access requests awaiting patient approval.</p>
+        <div class="table-responsive">
+          <table class="table hb-table mb-0">
+            <thead><tr><th>Patient ID</th><th>Name</th><th>Country</th><th>Email</th><th>Status</th><th></th></tr></thead>
+            <tbody id="pendingBody"></tbody>
+          </table>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Patient view: opened from the side panel -->
+<div id="workspace" class="d-none">
+  <div class="hb-card" id="recordsCard">
+    <div class="hb-card-body">
+      <div class="toolbar mb-3">
+        <input class="form-control search" type="search" id="q" placeholder="Search…" aria-label="Search records">
+        <select class="form-select w-auto filter-select" id="filter" aria-label="Filter"></select>
+        <select class="form-select w-auto d-none" id="tripSelect" aria-label="Trip analysed"></select>
+        <button class="btn btn-primary ms-auto d-none" type="button" id="addBtn"><i class="bi bi-plus-lg me-1"></i><span>Add</span></button>
+      </div>
+      <div id="tabBody"></div>
+    </div>
+  </div>
+  <div id="findingBox" class="mt-4"></div>
+</div>
+
+{% include 'portal/_history_forms.html' %}
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/history_shared.js?v={{ v }}"></script><script src="/static/portal/js/doctor_dashboard.js?v={{ v }}"></script><script src="/static/portal/js/doctor_patients.js?v={{ v }}"></script>{% endblock %}

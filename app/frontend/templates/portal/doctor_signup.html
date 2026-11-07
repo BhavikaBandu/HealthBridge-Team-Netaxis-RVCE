@@ -1,0 +1,58 @@
+{% extends 'portal/auth_base.html' %}
+{% block title %}Create doctor account · HealthBridge{% endblock %}
+{% block content %}
+<span class="chip chip-teal mb-2"><i class="bi bi-hospital"></i>Doctor Portal</span>
+<h1 class="h3 mb-1">Create your doctor account</h1>
+<p class="hb-muted mb-4">Join HealthBridge to review your patients' records and cross-border care.</p>
+
+<form id="signupForm" novalidate data-endpoint="/api/auth/doctor-signup" data-home="/doctor/dashboard">
+  <div class="form-alert alert alert-danger small d-none" role="alert"></div>
+  <div class="mb-3">
+    <label class="form-label" for="full_name">Full name <span class="req">*</span></label>
+    <input class="form-control" id="full_name" name="full_name" autocomplete="name" required maxlength="120" placeholder="e.g. Dr. Jane Smith">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="email">Email address <span class="req">*</span></label>
+    <input class="form-control" id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="phone">Phone number <span class="hb-muted fw-normal">(optional)</span></label>
+    <input class="form-control" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+971 50 123 4567" maxlength="30">
+    <div class="form-text">Include the country code.</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="registration_number">Medical registration number</label>
+    <input class="form-control" id="registration_number" name="registration_number" maxlength="60">
+    <div class="form-text">Used by an administrator to verify your account. It is not checked automatically.</div>
+  </div>
+  <div class="row g-3 mb-3">
+    <div class="col-sm-6"><label class="form-label" for="hospital">Hospital <span class="hb-muted fw-normal">(optional)</span></label>
+      <input class="form-control" id="hospital" name="hospital" maxlength="200"></div>
+    <div class="col-sm-6"><label class="form-label" for="speciality">Speciality <span class="hb-muted fw-normal">(optional)</span></label>
+      <input class="form-control" id="speciality" name="speciality" maxlength="120" placeholder="e.g. Cardiology"></div>
+    <div class="col-sm-6"><label class="form-label" for="origin_country">Country</label>
+      <select class="form-select" id="origin_country" name="origin_country"></select></div>
+    <div class="col-sm-6"><label class="form-label" for="preferred_language">Preferred language</label>
+      <select class="form-select" id="preferred_language" name="preferred_language">
+        <option value="">Select language</option><option value="en">English</option><option value="ar">Arabic</option></select></div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="password">Create password <span class="req">*</span></label>
+    <div class="input-group">
+      <input class="form-control" id="password" name="password" type="password" autocomplete="new-password" required maxlength="128">
+      <button class="btn btn-toggle-pw" type="button" data-toggle-pw aria-label="Show password"><i class="bi bi-eye"></i></button>
+    </div>
+    <ul class="pw-rules" id="pwRules" aria-label="Password requirements"></ul>
+  </div>
+  <div class="mb-4">
+    <label class="form-label" for="confirm_password">Confirm password <span class="req">*</span></label>
+    <div class="input-group">
+      <input class="form-control" id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required maxlength="128">
+      <button class="btn btn-toggle-pw" type="button" data-toggle-pw aria-label="Show password"><i class="bi bi-eye"></i></button>
+    </div>
+  </div>
+  <button class="btn btn-primary w-100 py-2" type="submit" id="signupBtn">Sign up</button>
+</form>
+<div class="text-center mt-4 small"><span class="hb-muted">Already have an account?</span> <a href="/login?role=doctor" class="fw-semibold">Sign in</a></div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/signup.js?v={{ v }}"></script>{% endblock %}

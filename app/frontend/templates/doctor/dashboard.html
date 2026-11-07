@@ -1,0 +1,50 @@
+{% extends 'portal/app_base.html' %}
+{% set parts = (full_name or 'Doctor').split() %}
+{% block heading %}Welcome back, {{ (parts[0] ~ ' ' ~ parts[1]) if parts[0] in ('Dr.', 'Dr') and parts|length > 1 else parts[0] }}!{% endblock %}
+{% block subheading %}Your patients, invitations and arrivals at a glance.{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-xl-8">
+    <div class="trip-hero doctor-hero">
+      <i class="bi bi-globe-americas plane" aria-hidden="true"></i>
+      <div class="d-flex align-items-center gap-2"><i class="bi bi-heart-pulse"></i><span class="fw-semibold">HealthBridge for doctors</span></div>
+      <h2>Cross-border care, made clearer</h2>
+      <div class="meta">Review your patients' medicines, procedures, reports and destination rules in one place, backed by official sources.</div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-4"><a class="hb-card stat-card" href="/doctor/patients">
+        <span class="icon-tile"><i class="bi bi-people"></i></span>
+        <div><div class="num" id="assignedCount">–</div><div class="lbl">Assigned Patients</div></div></a></div>
+      <div class="col-md-4"><a class="hb-card stat-card" href="/doctor/patients#pending">
+        <span class="icon-tile"><i class="bi bi-envelope"></i></span>
+        <div><div class="num" id="pendingCount">–</div><div class="lbl">Pending Invitations</div></div></a></div>
+      <div class="col-md-4"><a class="hb-card stat-card" href="/doctor/patients">
+        <span class="icon-tile"><i class="bi bi-airplane"></i></span>
+        <div><div class="num" id="arrivalsCount">–</div><div class="lbl">Upcoming Arrivals</div></div></a></div>
+    </div>
+  </div>
+
+  <div class="col-xl-4">
+    <div class="hb-card">
+      <div class="hb-card-body">
+        <h2 class="hb-card-title mb-3">Quick Actions</h2>
+        <div class="d-grid gap-2">
+          <a class="qa-btn" href="/doctor/patients#request"><i class="bi bi-person-plus"></i>Request Patient Access</a>
+          <a class="qa-btn" href="/doctor/patients"><i class="bi bi-folder2-open"></i>Open Patient Records</a>
+          <a class="qa-btn" href="/doctor/knowledge"><i class="bi bi-journal-medical"></i>Knowledge Explorer</a>
+        </div>
+      </div>
+    </div>
+    <div class="hb-card privacy-card mt-4">
+      <div class="hb-card-body py-4">
+        <span class="shield mb-3"><i class="bi bi-shield-lock"></i></span>
+        <div class="fw-semibold">Patient-controlled access</div>
+        <div class="small hb-muted mt-1">You see only patients who approved your request. They can revoke access at any time,
+          and every record you open is logged.</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/doctor_dashboard.js?v={{ v }}"></script>{% endblock %}

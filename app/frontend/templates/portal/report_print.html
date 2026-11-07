@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="{{ r.language }}" dir="{{ r.dir }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ r.title }}</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: #000; font-family: "Segoe UI", Arial, "Noto Naskh Arabic", "Tahoma", sans-serif;
+           font-size: 13px; line-height: 1.5; }
+    .page { max-width: 780px; margin: 0 auto; padding: 32px 36px 40px; }
+    .bar { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 18px; }
+    .bar button { font: inherit; padding: 7px 14px; border: 1px solid #000; background: #fff; color: #000; border-radius: 6px; cursor: pointer; }
+    .bar button.primary { background: #000; color: #fff; }
+    header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 16px; }
+    h1 { font-size: 22px; margin: 0 0 2px; }
+    .brand { font-size: 12px; letter-spacing: .04em; }
+    .meta { display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px; margin-top: 10px; }
+    .meta dt { font-weight: 600; }
+    .meta dd { margin: 0; }
+    h2 { font-size: 15px; margin: 18px 0 6px; padding-bottom: 4px; border-bottom: 1px solid #000; }
+    .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; padding: 6px 0; border-bottom: 1px solid #ccc; }
+    .row .main { font-weight: 600; }
+    .row .tag { font-weight: 400; }
+    .row .sub { color: #333; }
+    .badge { border: 1px solid #000; border-radius: 10px; padding: 0 9px; font-size: 11px; white-space: nowrap; }
+    .flag { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid #ccc; }
+    .flag .mark { font-weight: 700; min-width: 14px; }
+    .qty p { margin: 4px 0; }
+    .h1sec { font-size: 17px; margin: 24px 0 4px; }
+    .block { border: 1px solid #000; border-radius: 6px; padding: 10px 12px; margin: 10px 0; break-inside: avoid; }
+    .block .head { display: flex; justify-content: space-between; gap: 10px; font-weight: 600; }
+    .grid { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+    .grid th, .grid td { border-bottom: 1px solid #ccc; padding: 3px 6px; text-align: start; vertical-align: top; }
+    .grid th { font-weight: 600; }
+    .fact { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; border-bottom: 1px solid #ccc; }
+    .fact.problem { font-weight: 600; }
+    .small { font-size: 11.5px; }
+    .src { font-size: 11px; color: #333; margin-top: 4px; }
+    .srclist { padding-inline-start: 18px; margin: 4px 0; font-size: 12px; }
+    .note { margin-top: 18px; font-size: 11px; border-top: 1px solid #000; padding-top: 8px; }
+    @media print {
+      .bar { display: none; }
+      .page { padding: 0; max-width: none; }
+      @page { margin: 16mm 14mm; }
+      .row, .flag { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="bar">
+    <button type="button" onclick="window.close()">{{ 'إغلاق' if r.language == 'ar' else 'Close' }}</button>
+    <button type="button" class="primary" onclick="window.print()">{{ 'حفظ بصيغة PDF' if r.language == 'ar' else 'Save as PDF' }}</button>
+  </div>
+  <header>
+    <div class="brand">HealthBridge</div>
+    <h1>{{ r.title }}</h1>
+    <dl class="meta">
+      {% for label, value in r.meta %}<dt>{{ label }}</dt><dd><bdi>{{ value }}</bdi></dd>{% endfor %}
+    </dl>
+  </header>
+
+  {% if r.summary_title %}<div class="h1sec"><strong>{{ r.summary_title }}</strong></div>{% endif %}
+  {% for sec in r.sections %}
+  <h2>{{ sec.title }}</h2>
+  {% for row in sec.rows %}
+  <div class="row">
+    <div>
+      <div class="main">{{ row.main }}{% if row.tag %} <span class="tag">· {{ row.tag }}</span>{% endif %}</div>
+      {% if row.sub %}<div class="sub">{{ row.sub }}</div>{% endif %}
+    </div>
+    {% if row.badge %}<span class="badge">{{ row.badge }}</span>{% endif %}
+  </div>
+  {% endfor %}
+  {% endfor %}
+
+  {% if r.details %}
+  <div class="h1sec"><strong>{{ r.details_title }}</strong></div>
+  {% for g in r.details %}
+  <h2>{{ g.heading }}</h2>
+  {% for b in g.blocks %}
+  <div class="block">
+    <div class="head"><span>{{ b.title }}</span>{% if b.label %}<span class="badge">{{ b.label }}{% if b.badge %} · {{ b.badge }}{% endif %}</span>{% endif %}</div>
+    {% if b.rows %}
+    <table class="grid"><thead><tr><th></th>{% for c in b.columns %}<th>{{ c }}</th>{% endfor %}</tr></thead>
+      <tbody>{% for row in b.rows %}<tr>{% for cell in row %}<td>{% if loop.first %}<strong>{{ cell }}</strong>{% else %}{{ cell }}{% endif %}</td>{% endfor %}</tr>{% endfor %}</tbody></table>
+    {% endif %}
+    {% if b.allergy %}<div class="small" style="margin-top: 6px;"><strong>{{ 'فحص الحساسية:' if r.language == 'ar' else 'Allergy check:' }}</strong>{% if b.allergy_status in ('direct', 'possible') %} ⚠{% endif %} {{ b.allergy }}</div>{% endif %}
+    {% for x in b.facts %}<div class="fact {{ 'problem' if x.problem else '' }}"><span>{{ x.label }}</span><span>{{ x.value }}{% if x.converted %} → {{ x.converted }}{% endif %}</span></div>{% endfor %}
+    {% if b.context %}<div class="small" style="white-space: pre-line; margin-top: 6px;">{{ b.context }}</div>{% endif %}
+    {% if b.verify %}<div class="small" style="margin-top: 6px;"><strong>{{ 'تحقق:' if r.language == 'ar' else 'Verify:' }}</strong> {{ b.verify }}</div>{% endif %}
+    {% if b.sources %}<div class="src">{{ 'المصادر:' if r.language == 'ar' else 'Sources:' }} <bdi>{{ b.sources | join(', ') }}</bdi></div>{% endif %}
+  </div>
+  {% endfor %}
+  {% endfor %}
+  {% endif %}
+
+  {% if r.flags %}
+  <h2>{{ r.flags_title }}</h2>
+  {% for f in r.flags %}
+  <div class="flag"><span class="mark">{{ '!' if f.severity == 'action' else 'i' }}</span><span>{{ f.text }}
+    {% if f.sources %}<div class="src">{{ 'المصادر:' if r.language == 'ar' else 'Sources:' }} <bdi>{{ f.sources | join(', ') }}</bdi></div>{% endif %}</span></div>
+  {% endfor %}
+  {% endif %}
+
+  {% if r.quantity %}
+  <h2>{{ r.quantity_title }}</h2>
+  <div class="qty">
+    {% for q in r.quantity %}<p><strong><bdi>{{ q.subject }}</bdi></strong> — {{ q.text }}
+      {% if q.sources %}<span class="src" style="display:block">{{ 'المصادر:' if r.language == 'ar' else 'Sources:' }} <bdi>{{ q.sources | join(', ') }}</bdi></span>{% endif %}</p>{% endfor %}
+  </div>
+  {% endif %}
+
+  {% if r.source_list %}
+  <h2>{{ r.sources_title }}</h2>
+  <ul class="srclist">{% for s in r.source_list %}<li><bdi><strong>{{ s.id }}</strong> — {{ s.title }}</bdi></li>{% endfor %}</ul>
+  <p class="small">{{ 'ابحث عن هذه المعرّفات في مستكشف المعرفة.' if r.language == 'ar' else 'Search these IDs in the Knowledge Explorer.' }}</p>
+  {% endif %}
+
+  <p class="note">{{ r.disclaimer }}</p>
+</div>
+{% if auto_print %}<script>window.addEventListener('load', () => setTimeout(() => window.print(), 300));</script>{% endif %}
+</body>
+</html>

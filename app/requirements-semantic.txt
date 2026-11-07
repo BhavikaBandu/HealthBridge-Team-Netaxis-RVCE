@@ -1,0 +1,4 @@
+# Optional: semantic + hybrid search. Downloads a ~220 MB model on first use
+# (sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2, Apache-2.0) into data/processed/models/.
+numpy>=1.26,<3
+fastembed>=0.4,<1

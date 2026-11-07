@@ -1,0 +1,65 @@
+{% extends 'portal/app_base.html' %}
+{% block content %}
+<div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+  <div class="patient-picker travel-picker">
+    <div class="input-group">
+      <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+      <input class="form-control" id="tripSearch" type="search" role="combobox" aria-expanded="false" aria-controls="tripList"
+             aria-autocomplete="list" autocomplete="off" placeholder="Choose a trip" aria-label="Choose a trip">
+      <span class="input-group-text bg-white"><i class="bi bi-chevron-down"></i></span>
+    </div>
+    <div class="picker-list d-none" id="tripList" role="listbox" aria-label="Your trips"></div>
+  </div>
+  <button class="btn btn-outline-primary ms-auto d-none" type="button" id="refreshBtn"><i class="bi bi-arrow-repeat me-1"></i>Refresh summary</button>
+</div>
+
+<div class="hb-card mb-3 d-none" id="reportBar"><div class="hb-card-body d-flex flex-wrap align-items-center gap-3">
+  <div class="me-auto">
+    <div class="fw-semibold"><i class="bi bi-file-earmark-text text-primary me-2"></i>Travel health report</div>
+    <div class="small hb-muted" id="reportNote">A printable copy of this summary.</div>
+  </div>
+  <label class="small hb-muted" for="reportLang">Language</label>
+  <select class="form-select report-lang" id="reportLang">
+    <option value="en">English</option>
+    <option value="ar">العربية (Arabic)</option>
+  </select>
+  <button class="btn btn-primary" type="button" id="reportBtn"><i class="bi bi-file-earmark-arrow-down me-1"></i><span>Generate report</span></button>
+</div></div>
+
+<div id="summaryState"></div>
+
+<div id="summaryBody" class="d-none">
+  <div class="row g-3">
+    <div class="col-lg-6">
+      <div class="hb-card h-100"><div class="hb-card-body">
+        <h2 class="hb-card-title mb-2"><i class="bi bi-capsule text-primary"></i><span id="medTitle">Medicines</span></h2>
+        <div id="medList" class="ts-list"></div>
+      </div></div>
+    </div>
+    <div class="col-lg-6">
+      <div class="hb-card h-100"><div class="hb-card-body">
+        <h2 class="hb-card-title mb-2"><i class="bi bi-bandaid text-primary"></i><span id="procTitle">Procedures</span></h2>
+        <div id="procList" class="ts-list"></div>
+        <div id="labBlock">
+          <h2 class="hb-card-title mt-4 mb-2"><i class="bi bi-clipboard2-pulse text-primary"></i>Lab results</h2>
+          <div id="labList" class="ts-list"></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="hb-card mt-3"><div class="hb-card-body">
+    <h2 class="hb-card-title mb-2"><i class="bi bi-flag text-danger"></i>Flags to act on</h2>
+    <div id="flagList" class="ts-list"></div>
+  </div></div>
+
+  <div class="hb-card mt-3 ts-quantity"><div class="hb-card-body">
+    <h2 class="hb-card-title mb-2"><i class="bi bi-box-seam"></i>Quantity advice</h2>
+    <div id="qtyList"></div>
+  </div></div>
+
+  <p class="small hb-muted mt-3 mb-0"><i class="bi bi-info-circle me-1"></i>Generated from your records and official sources.
+    Not a medical decision or a travel clearance. Check with your doctor.</p>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/travel.js?v={{ v }}"></script>{% endblock %}

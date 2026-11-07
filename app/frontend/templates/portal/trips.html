@@ -1,0 +1,42 @@
+{% extends 'portal/app_base.html' %}
+{% block content %}
+<div class="d-flex justify-content-end mb-3">
+  <button class="btn btn-primary" type="button" id="newTrip"><i class="bi bi-plus-lg me-1"></i>Create Trip</button>
+</div>
+<div id="tripList" class="d-grid gap-3"><div class="skeleton" style="height:90px"></div></div>
+
+<div class="modal fade" id="tripModal" tabindex="-1" aria-labelledby="tripTitle">
+  <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+    <form id="tripForm" novalidate>
+      <div class="modal-header"><h5 class="modal-title" id="tripTitle">Create New Trip</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body">
+        <div class="form-alert alert alert-danger small d-none" role="alert"></div>
+        <label class="form-label">Travel purpose <span class="req">*</span></label>
+        <div class="row g-2 mb-3">
+          <div class="col-md-6"><div class="form-check hb-card p-3 ps-5 h-100">
+            <input class="form-check-input" type="radio" name="purpose_type" id="pBasic" value="basic" checked>
+            <label class="form-check-label" for="pBasic"><span class="fw-semibold d-block">Basic Travel</span><span class="small hb-muted">General travel (tourism, business, family)</span></label></div></div>
+          <div class="col-md-6"><div class="form-check hb-card p-3 ps-5 h-100">
+            <input class="form-check-input" type="radio" name="purpose_type" id="pSpecial" value="specialised">
+            <label class="form-check-label" for="pSpecial"><span class="fw-semibold d-block">Specialised Care</span><span class="small hb-muted">Travel for a specific medical consultation, treatment or procedure</span></label></div></div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label" for="origin_country">Origin country <span class="req">*</span></label>
+            <select class="form-select" id="origin_country" name="origin_country" required></select></div>
+          <div class="col-md-6"><label class="form-label" for="destination_country">Destination country <span class="req">*</span></label>
+            <select class="form-select" id="destination_country" name="destination_country" required></select></div>
+          <div class="col-md-6"><label class="form-label" for="departure_date">Departure date <span class="req">*</span></label>
+            <input class="form-control" type="date" id="departure_date" name="departure_date" required></div>
+          <div class="col-md-6"><label class="form-label" for="return_date">Return date <span class="hb-muted fw-normal">(optional)</span></label>
+            <input class="form-control" type="date" id="return_date" name="return_date"></div>
+          <div class="col-12 d-none" id="descWrap"><label class="form-label" for="purpose_description">Purpose of specialised care <span class="req">*</span></label>
+            <textarea class="form-control" id="purpose_description" name="purpose_description" rows="3" maxlength="1000" placeholder="e.g. Cardiology consultation and follow-up treatment"></textarea></div>
+        </div>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="tripSave">Create Trip</button></div>
+    </form>
+  </div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/trips.js?v={{ v }}"></script>{% endblock %}

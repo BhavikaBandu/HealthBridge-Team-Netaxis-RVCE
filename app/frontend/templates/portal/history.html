@@ -1,0 +1,36 @@
+{% extends 'portal/app_base.html' %}
+{% block content %}
+<div class="hb-card">
+  <div class="px-3 pt-2">
+    <ul class="nav hb-tabs" role="tablist" id="kindTabs">
+      <li class="nav-item"><button class="nav-link active" data-kind="medications" type="button"><i class="bi bi-capsule me-1"></i>Medications <span class="count" data-count="medications">–</span></button></li>
+      <li class="nav-item"><button class="nav-link" data-kind="conditions" type="button"><i class="bi bi-heart-pulse me-1"></i>Conditions <span class="count" data-count="conditions">–</span></button></li>
+      <li class="nav-item"><button class="nav-link" data-kind="procedures" type="button"><i class="bi bi-bandaid me-1"></i>Procedures <span class="count" data-count="procedures">–</span></button></li>
+      <li class="nav-item"><button class="nav-link" data-kind="allergies" type="button"><i class="bi bi-exclamation-triangle me-1"></i>Allergies <span class="count" data-count="allergies">–</span></button></li>
+    </ul>
+  </div>
+  <div class="hb-card-body">
+    <div id="allergyDecl" class="hb-card p-3 mb-3 d-none">
+      <div class="fw-semibold mb-2">Do you have any allergies?</div>
+      <div class="d-flex flex-wrap gap-3" role="radiogroup" aria-label="Allergy status">
+        <div class="form-check"><input class="form-check-input" type="radio" name="declaration" id="declUnknown" value="unknown"><label class="form-check-label" for="declUnknown">Unknown / not sure</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="declaration" id="declNone" value="none"><label class="form-check-label" for="declNone">No known allergies</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="declaration" id="declKnown" value="known"><label class="form-check-label" for="declKnown">I have known allergies</label></div>
+      </div>
+      <div class="small hb-muted mt-2" id="declHint"></div>
+    </div>
+
+    <div class="toolbar mb-3">
+      <input class="form-control search" type="search" id="q" placeholder="Search…" aria-label="Search records">
+      <select class="form-select w-auto filter-select" id="statusFilter" aria-label="Filter by status"></select>
+      <div class="form-check form-switch ms-1"><input class="form-check-input" type="checkbox" id="showArchived"><label class="form-check-label small" for="showArchived">Show archived</label></div>
+      <button class="btn btn-primary ms-auto" type="button" id="addBtn"><i class="bi bi-plus-lg me-1"></i><span>Add</span></button>
+    </div>
+    <div class="table-responsive"><table class="table hb-table" id="table"><thead></thead><tbody></tbody></table></div>
+    <div id="empty"></div>
+  </div>
+</div>
+
+{% include 'portal/_history_forms.html' %}
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/history_shared.js?v={{ v }}"></script><script src="/static/portal/js/history.js?v={{ v }}"></script>{% endblock %}

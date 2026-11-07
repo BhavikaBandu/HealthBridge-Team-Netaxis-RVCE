@@ -1,0 +1,42 @@
+{% extends 'portal/app_base.html' %}
+{% block content %}
+<div class="hb-card">
+  <div class="hb-card-body">
+    <div class="toolbar mb-3">
+      <input class="form-control search" type="search" id="q" placeholder="Search documents…" aria-label="Search documents">
+      <select class="form-select w-auto filter-select" id="typeFilter" aria-label="Filter by type"><option value="">All types</option></select>
+      <div class="form-check form-switch ms-1"><input class="form-check-input" type="checkbox" id="showArchived"><label class="form-check-label small" for="showArchived">Show archived</label></div>
+      <button class="btn btn-primary ms-auto" type="button" id="uploadBtn"><i class="bi bi-cloud-arrow-up me-1"></i>Upload Document</button>
+    </div>
+    <div class="table-responsive"><table class="table hb-table" id="table">
+      <thead><tr><th>Document</th><th>Type</th><th>Date</th><th>Linked to</th><th>Uploaded</th><th></th></tr></thead>
+      <tbody></tbody></table></div>
+    <div id="empty"></div>
+  </div>
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="upTitle">
+  <div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+    <form id="uploadForm" novalidate>
+      <div class="modal-header"><h5 class="modal-title" id="upTitle">Upload Document</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+      <div class="modal-body">
+        <div class="form-alert alert alert-danger small d-none" role="alert"></div>
+        <div class="mb-3" id="fileWrap"><label class="form-label" for="file">File <span class="req">*</span></label>
+          <input class="form-control" type="file" id="file" name="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required>
+          <div class="form-text">PDF, JPG or PNG, up to <span id="maxMb">10</span> MB.</div></div>
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label" for="d_name">Document name <span class="req">*</span></label><input class="form-control" id="d_name" name="name" maxlength="200" required></div>
+          <div class="col-md-6"><label class="form-label" for="d_type">Document type <span class="req">*</span></label><select class="form-select" id="d_type" name="doc_type" required><option value="">Select type</option></select></div>
+          <div class="col-md-6"><label class="form-label" for="d_date">Document date</label><input class="form-control" type="date" id="d_date" name="document_date"></div>
+          <div class="col-md-6"><label class="form-label" for="d_link">Link to medical record <span class="hb-muted fw-normal">(optional)</span></label>
+            <select class="form-select" id="d_link" name="link"><option value="">No link</option></select></div>
+          <div class="col-12"><label class="form-label" for="d_notes">Notes</label><textarea class="form-control" id="d_notes" name="notes" rows="2" maxlength="2000"></textarea></div>
+          <div class="col-12 d-none" id="existingLinks"></div>
+        </div>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn btn-primary" id="upSave">Upload</button></div>
+    </form>
+  </div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/documents.js?v={{ v }}"></script>{% endblock %}

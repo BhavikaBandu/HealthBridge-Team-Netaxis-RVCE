@@ -1,0 +1,39 @@
+{% extends 'portal/auth_base.html' %}
+{% block title %}Sign in · HealthBridge{% endblock %}
+{% block content %}
+<h1 class="h3 mb-1">Sign in</h1>
+<p class="hb-muted mb-4">Access your HealthBridge account</p>
+
+<div class="role-switch" role="radiogroup" aria-label="I am signing in as">
+  <input type="radio" name="role" id="rolePatient" value="patient" checked>
+  <label for="rolePatient"><i class="bi bi-person"></i>Patient</label>
+  <input type="radio" name="role" id="roleDoctor" value="doctor">
+  <label for="roleDoctor"><i class="bi bi-hospital"></i>Doctor</label>
+</div>
+
+<form id="loginForm" novalidate>
+  <div class="form-alert alert alert-danger small d-none" role="alert"></div>
+  <div class="mb-3">
+    <label class="form-label" for="email">Email address</label>
+    <input class="form-control" id="email" name="email" type="email" autocomplete="username" required maxlength="254">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="password">Password</label>
+    <div class="input-group">
+      <input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required maxlength="128">
+      <button class="btn btn-toggle-pw" type="button" data-toggle-pw aria-label="Show password"><i class="bi bi-eye"></i></button>
+    </div>
+  </div>
+  <div class="form-check mb-4">
+    <input class="form-check-input" type="checkbox" id="remember" name="remember">
+    <label class="form-check-label small" for="remember">Keep me signed in on this device</label>
+  </div>
+  <button class="btn btn-primary w-100 py-2" type="submit" id="loginBtn">Sign in</button>
+</form>
+
+<div id="signupLink" class="text-center mt-4 small">
+  <span class="hb-muted">New to HealthBridge?</span>
+  <a href="/signup" class="fw-semibold" id="signupHref">Create a patient account</a>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/login.js?v={{ v }}"></script>{% endblock %}

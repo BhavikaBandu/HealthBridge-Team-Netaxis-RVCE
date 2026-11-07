@@ -1,0 +1,37 @@
+{% extends 'portal/app_base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-xl-8">
+    <div class="hb-card" id="doctorAccess">
+      <div class="hb-card-body">
+        <h2 class="hb-card-title mb-1"><i class="bi bi-shield-lock text-primary"></i>Doctor Access</h2>
+        <p class="small hb-muted mb-3">Doctors can only see your records after you accept their request. You can revoke access at any time.</p>
+        <div id="accessPending"></div>
+      </div>
+    </div>
+
+    <div class="hb-card mt-4">
+      <div class="hb-card-body">
+        <h2 class="hb-card-title mb-3"><i class="bi bi-person-check text-primary"></i>Doctors with access</h2>
+        <div class="table-responsive">
+          <table class="table hb-table mb-0">
+            <thead><tr><th>Doctor</th><th>Doctor ID</th><th>Speciality</th><th>Hospital</th><th>Access since</th><th></th></tr></thead>
+            <tbody id="accessGranted"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="hb-card privacy-card">
+      <div class="hb-card-body py-4">
+        <span class="shield mb-3"><i class="bi bi-person-lock"></i></span>
+        <div class="fw-semibold">You decide who sees your records</div>
+        <div class="small hb-muted mt-1">An approved doctor can view your trips, medical history and documents, and add medical-history entries
+          shown as "Doctor reported". Revoking access takes effect immediately.</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/portal/js/access.js?v={{ v }}"></script>{% endblock %}
