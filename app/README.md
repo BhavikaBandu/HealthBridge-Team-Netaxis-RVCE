@@ -30,22 +30,23 @@ All commands below are run from the `app/` folder.
 
 ## 3. Bring in the source data
 
-The knowledge base is built from the official source files in `source-data/` (next to `app/`). The application reads
-them from the folder set by `RAW_DATA_DIR` in `.env` (default `../source-data`).
+The knowledge base is built from the official source files in `source-data/raw/` (next to `app/`). The application
+reads them from the folder set by `RAW_DATA_DIR` in `.env` (default `../source-data/raw`).
 
 - **Cloned with the repository:** nothing to do.
 - **Downloaded separately:** unzip it next to `app/` so the layout is `healthbridge/app` and `healthbridge/source-data`,
-  or put it anywhere and set `RAW_DATA_DIR` to that folder.
+  or put it anywhere and set `RAW_DATA_DIR` to its `raw` folder.
 
 Expected layout:
 
 ```
 source-data/
-├── manifests/          source catalogue
-├── medicines/          MED01, MED02, MED07, MED08, Swiss AIPS
-├── medical_reports/    LAB01, LAB02, LAB03, UCUM
-├── procedures/         PROC04, PROC05-K, PROC05-R
-└── policies/           AE11, AE12, AE26, AE27, AE28, AE33
+├── manifests/              source catalogue
+└── raw/
+    ├── medicines/          MED01, MED02, MED07, MED08, Swiss AIPS
+    ├── medical_reports/    LAB01, LAB02, LAB03, UCUM
+    ├── procedures/         PROC04, PROC05-K, PROC05-R
+    └── policies/           AE11, AE12, AE26, AE27, AE28, AE33
 ```
 
 ## 4. Create the database
@@ -92,7 +93,7 @@ Copy-Item .env.example .env        # macOS / Linux: cp .env.example .env
 | Setting | Default | Meaning |
 |---|---|---|
 | `DATABASE_URL` | `postgresql+psycopg://healthcare:healthcare@localhost:5432/healthcare` | Database from step 4 |
-| `RAW_DATA_DIR` | `../source-data` | Folder with the official source files (step 3) |
+| `RAW_DATA_DIR` | `../source-data/raw` | Folder with the official source files (step 3) |
 | `LLM_PROVIDER` | `ollama` | Local model through Ollama (`mock` = template wording, no AI) |
 | `LLM_MODEL` | `qwen3:30b-a3b` | Ollama model name |
 | `LLM_TIMEOUT_SECONDS` | `300` | Time allowed per AI call |
@@ -116,7 +117,7 @@ python -m backend.retrieval.embeddings      # 3. build the search embeddings
 ```
 
 1. **Tables:** Alembic applies the migrations in `migrations/versions/`.
-2. **Ingestion:** reads every source in `source-data/`, stores a hashed copy in `data/processed/snapshots/`, and creates
+2. **Ingestion:** reads every source in `source-data/raw/`, stores a hashed copy in `data/processed/snapshots/`, and creates
    about 31,000 searchable records and the structured fact tables (medicine products and ingredients, lab references,
    procedure terms, policy clauses, controlled substances). Re-running is safe: unchanged files are skipped.
 3. **Embeddings:** downloads the multilingual embedding model on first run into `data/processed/models/` and computes a
@@ -205,7 +206,7 @@ app/
 
 ## 13. Adding a new source
 
-1. Put the file in `source-data/<domain>/<SOURCE_ID>/` with a `metadata.json` describing where it came from.
+1. Put the file in `source-data/raw/<domain>/<SOURCE_ID>/` with a `metadata.json` describing where it came from.
 2. Register it in `backend/ingestion/registry.py` (source ID, domain, country, publisher, parser, licence note).
 3. Re-run ingestion and then embeddings:
 
@@ -231,7 +232,7 @@ Unchanged sources are skipped; a changed file becomes a new version and the old 
 |---|---|
 | Pages return 503 "Database schema missing" | Run `python -m alembic upgrade head` |
 | Cannot connect to the database | Start the PostgreSQL service and check `DATABASE_URL` in `.env` |
-| Ingestion cannot find source files | Check that `source-data/` is next to `app/`, or set `RAW_DATA_DIR` |
+| Ingestion cannot find source files | Check that `source-data/raw/` is next to `app/`, or set `RAW_DATA_DIR` |
 | Knowledge Explorer finds no "similar meaning" results | Install `requirements-semantic.txt` and run `python -m backend.retrieval.embeddings` |
 | Summaries use plain template wording | Start Ollama and run `ollama pull qwen3:30b-a3b`; then press Refresh summary |
 | Doctor sees "awaiting verification" and cannot invite patients | Approve the account with `python -m backend.portal.doctors approve <email>` |
