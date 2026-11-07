@@ -55,4 +55,4 @@ fastembed multilingual embeddings · Jinja2, Bootstrap 5 and JavaScript
 
 HealthBridge is a research prototype. It does not diagnose, prescribe, approve medicine substitutions or grant
 permission to carry medicines. Its output is information for a patient and a clinician to review. Use synthetic data
-only.
+only for testing purposed.
