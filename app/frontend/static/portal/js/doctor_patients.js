@@ -181,7 +181,7 @@ function findingBox(id) {
       al.by === 'ai' ? h('span', {class: 'hb-muted ms-1', text: '(AI check – confirm with prescriber)'}) : null));
   }
   if (f.facts?.length) {
-    const basisText = {sources: `${destShort()} lab source`, ai: 'AI estimate', rule: 'reviewed rule'};
+    const basisText = {sources: `${destShort()} lab source`, rule: 'reviewed rule'};
     parts.push(h('div', {class: 'mt-2'}, f.facts.map(x => h('div', {class: `fx-fact ${x.problem ? 'text-danger' : ''}`},
       h('span', {text: x.label}), h('span', {}, h('span', {class: 'fw-semibold', text: x.value}), x.converted ? ` → ` : '',
         x.converted ? h('span', {class: 'fw-semibold', text: x.converted}) : null,

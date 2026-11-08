@@ -90,8 +90,9 @@ function render(data) {
   const meds = data.findings.filter(f => f.agent === 'medicine');
   const procs = data.findings.filter(f => f.agent === 'procedure');
   const dest = data.trip.destination_country === 'AE' ? 'UAE' : data.trip.destination_name;
-  $('#medTitle').textContent = `Medicines in the ${dest}`;
-  $('#procTitle').textContent = `Procedures in the ${dest}`;
+  const where = ['UAE', 'UK', 'USA'].includes(dest) ? `the ${dest}` : dest;   // "the UAE", but "Switzerland"
+  $('#medTitle').textContent = `Medicines in ${where}`;
+  $('#procTitle').textContent = `Procedures in ${where}`;
   const tagOf = f => [TAG[f.record_status], f.freshness === 'stale' ? 'out of date' : null].filter(Boolean).join(' · ');
   $('#medList').replaceChildren(...(meds.length ? meds.map(f => row(f.title.split(' → ')[0], f.patient_line, confChip(f.confidence), tagOf(f)))
     : [h('p', {class: 'small hb-muted mb-0', text: 'No medicines in your history.'})]));

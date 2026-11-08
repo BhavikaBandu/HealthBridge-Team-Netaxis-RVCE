@@ -12,16 +12,19 @@ from .models import DoctorProfile, PatientProfile, TripReport
 
 router = APIRouter(include_in_schema=False)
 templates = Jinja2Templates(directory=str(ROOT / 'frontend/templates'))
-ASSET_VERSION = '33'
+ASSET_VERSION = '37'
 
-PATIENT_NAV = [('dashboard', '/dashboard', 'Dashboard', 'house'), ('profile', '/profile', 'My Profile', 'person'),
-               ('trips', '/trips', 'My Trips', 'airplane'), ('history', '/medical-history', 'Medical History', 'heart-pulse'),
+PATIENT_NAV = [('dashboard', '/dashboard', 'Dashboard', 'house'),
+               ('history', '/medical-history', 'Medical History', 'heart-pulse'),
                ('documents', '/documents', 'Documents', 'file-earmark-text'),
+               ('trips', '/trips', 'My Trips', 'airplane'),
                ('travel', '/travel-summary', 'Travel Health Summary', 'clipboard2-pulse'),
-               ('access', '/doctor-access', 'Doctor Access', 'shield-lock')]
-DOCTOR_NAV = [('d_dashboard', '/doctor/dashboard', 'Dashboard', 'house'), ('d_profile', '/doctor/profile', 'My Profile', 'person'),
+               ('access', '/doctor-access', 'Doctor Access', 'shield-lock'),
+               ('profile', '/profile', 'My Profile', 'person')]
+DOCTOR_NAV = [('d_dashboard', '/doctor/dashboard', 'Dashboard', 'house'),
               ('d_patients', '/doctor/patients', 'Patient Records', 'people'),
-              ('d_knowledge', '/doctor/knowledge', 'Knowledge Explorer', 'journal-medical')]
+              ('d_knowledge', '/doctor/knowledge', 'Knowledge Explorer', 'journal-medical'),
+              ('d_profile', '/doctor/profile', 'My Profile', 'person')]
 PAGES = {'dashboard': ('Dashboard', ''), 'travel': ('Travel Health Summary', 'What your records mean for your destination'), 'profile': ('My Profile', 'Manage your personal information'),
          'trips': ('My Trips', 'Manage your travel plans and care journeys'),
          'history': ('Medical History', 'Maintain your health records in a structured format'),
