@@ -13,7 +13,6 @@ This directory contains the patient and doctor portals, official-source knowledg
 - [Run the application](#run-the-application)
 - [First-use walkthrough](#first-use-walkthrough)
 - [Developer reference](#developer-reference)
-- [Troubleshooting](#troubleshooting)
 
 ## Architecture & tech stack
 
@@ -196,19 +195,6 @@ After changes to medical history, **Reprocess now** reruns only the affected ana
 
 ## Developer reference
 
-### Useful commands
-
-| Command | Action |
-|---|---|
-| `python -m backend.check_env` | Verify dependencies, database, configuration |
-| `python -m backend.ai.analysis --patient <PATIENT_ID>` | Reanalyze changed parts of next trip |
-| `python -m backend.ai.analysis --patient <PATIENT_ID> --full` | Rerun all agents for next trip |
-| `python -m backend.portal.doctors list` | List doctor accounts |
-| `python -m backend.portal.doctors approve <email>` | Approve a doctor |
-| `python -m backend.portal.doctors reject <email>` | Reject a doctor |
-| `python -m backend.ai.snapshot save <name> --patient <PATIENT_ID>` | Save a trip-analysis snapshot |
-| `python -m backend.ai.snapshot restore <name> --patient <PATIENT_ID>` | Restore a snapshot |
-
 ### Add a new official source
 
 1. Place the file at `source-data/raw/<domain>/<SOURCE_ID>/` with a `metadata.json` describing its origin.
@@ -229,10 +215,7 @@ Unchanged sources are skipped; modified files are versioned while older snapshot
 - **Tune Ollama:** Configure `OLLAMA_URL` and `OLLAMA_NUM_CTX`.
 - **Change embedding model:** Set `EMBEDDING_MODEL`, then rebuild embeddings.
 
-## Troubleshooting
-
-| Symptom | Resolution |
-|---|---|
+---|---|
 | `503 Database schema missing` | Run `python -m alembic upgrade head` |
 | Cannot connect to PostgreSQL | Start the service and verify `DATABASE_URL` |
 | Source files not found | Check `source-data/raw/` or `RAW_DATA_DIR` |
