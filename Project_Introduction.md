@@ -1,6 +1,6 @@
 # HealthBridge: A Multi-Agent Framework with Neuro-Inspired Evidence Scoring for Cross-Border Healthcare (هيلث بريدج: إطار متعدد الوكلاء لتقييم الأدلة بنظام نقاط مستوحى من آليات الجهاز العصبي في الرعاية الصحية العابرة للحدود)
 
-<p align="center"><code>AI for Good Sandbox Hackathon</code></p>
+<p align="center"><code>AI for Good Sandbox Hackathon UAE-Submisssion</code></p>
 
 > ⚠️ HealthBridge is a research prototype, and its guidance should only be used in consultation with a qualified medical or legal professional, as appropriate.
 >
@@ -49,7 +49,7 @@ regulations.
 | 4. Policy & Jurisdiction Agent | Hierarchical, jurisdiction-aware legal RAG | Retrieve applicable healthcare regulations using country, authority, document hierarchy, effective dates and legal provisions. |
 | 5. Translation Agent | LLM localisation with a fixed glossary and number-preservation checks | Translate patient and doctor reports into Arabic, right-to-left, without changing any value, strength or warning. |
 
-## Team details
+## Team details - Team Netaxis, RVCE Bangalore, India
 
 | Name | Email |
 |---|---|
