@@ -8,10 +8,13 @@
 HealthBridge helps patients who travel abroad for treatment carry their medical history across borders. Patients keep
 their records and documents in one place; for each trip, four retrieval-augmented (RAG) agents compare those records
 with official sources of the destination country and explain what each medicine, procedure, lab value and travel rule
-means there, citing the source for every statement. A Dopamine–Cortisol controller then scores every finding, balancing
-the evidence for it (Dopamine) against gaps and risks (Cortisol), and decides whether it is shown as validated, shown
-with limitations or sent to a doctor for review. Doctors see the findings in their own portal, and patients get a
+means there, citing the source for every statement. Doctors see the findings in their own portal, and patients get a
 printable report in English or Arabic.
+
+A neuro-signal-inspired Dopamine–Cortisol controller then decides how far each finding can be trusted. Like the two
+signals in the brain, Dopamine ("go") rises with confirmed evidence and agreement between code and AI, while Cortisol
+("caution") rises with missing details, risk and contradictions. Together they decide whether a finding is shown as
+validated, shown with limitations or sent to a doctor for review.
 
 </div>
 
@@ -28,18 +31,13 @@ treatment.
 
 ## Agents
 
-<div align="justify">
-
-- **Medicine Agent (RAG + LLM):** matches each medicine to a destination product with the same ingredients and strength,
-  and checks it against the patient's allergies.
-- **Procedure Agent (RAG + LLM):** finds the destination service that matches each procedure (scan type, body area,
-  protocol), even when it is named differently.
-- **Report Agent (RAG + LLM):** reads uploaded documents and converts lab values into the units used at the destination.
-- **Policy Agent (RAG + LLM):** checks the destination's rules for carrying each medicine (controlled status, documents,
-  quantity limits) and picks the safer rule when sources disagree.
-- **Translation Agent (LLM):** translates the patient and doctor reports into Arabic.
-
-</div>
+| AI agent | RAG architecture | Main purpose |
+|---|---|---|
+| 1. Medicine Agent | Hybrid RAG + structured SQL retrieval | Match medicines across countries using active ingredients, strength, formulation, brand names and regulatory product information. |
+| 2. Procedure Agent | Medical terminology-aware hybrid RAG | Map procedures between countries using medical terminology, synonyms, anatomical details, modality and clinical context. |
+| 3. Medical Reports Agent | Clinical document RAG + deterministic normalisation | Interpret report terminology, extract findings and standardise laboratory units without changing the original clinical meaning. |
+| 4. Policy & Jurisdiction Agent | Hierarchical, jurisdiction-aware legal RAG | Retrieve applicable healthcare regulations using country, authority, document hierarchy, effective dates and legal provisions. |
+| 5. Translation Agent | LLM localisation with a fixed glossary and number-preservation checks | Translate patient and doctor reports into Arabic, right-to-left, without changing any value, strength or warning. |
 
 **Demo video:** [watch on Google Drive](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing) (see [`demo/`](demo/README.md))
 
