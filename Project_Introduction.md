@@ -59,7 +59,7 @@ regulations.
 healthbridge/
 ├── app/            the application: code, database migrations and setup instructions
 ├── demo/           demo videos (link to the Google Drive folder)
-└── source-data/    the official source files the knowledge base is built from, with licence notes
+└── knowledge-base/ the official source files the knowledge base is built from, with licence notes
 ```
 
 ## Technology
@@ -76,8 +76,8 @@ fastembed multilingual embeddings · Jinja2, Bootstrap 5 and JavaScript
 <div align="justify">
 
 - **Code:** the files in `app/` are the project's own work.
-- **Source data:** the files in `source-data/` come from regulators, reference laboratories, hospitals and
-  manufacturers and keep their original terms. See `source-data/README.md` before reusing or redistributing them.
+- **Source data:** the files in `knowledge-base/` come from regulators, reference laboratories, hospitals and
+  manufacturers and keep their original terms. See `knowledge-base/README.md` before reusing or redistributing them.
 
 </div>
 

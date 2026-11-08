@@ -91,10 +91,10 @@ The semantic requirements install FastEmbed and NumPy for similarity search. All
 
 ### 3. Add the official source files
 
-Source files belong in `../source-data/raw/` relative to `app/`. If provided separately, extract them beside `app/` or configure `RAW_DATA_DIR` to point to the extracted `raw/` directory.
+Source files belong in `../knowledge-base/raw/` relative to `app/`. If provided separately, extract them beside `app/` or configure `RAW_DATA_DIR` to point to the extracted `raw/` directory.
 
 ```text
-source-data/
+knowledge-base/
 ├── manifests/
 └── raw/
     ├── medicines/          MED01, MED02, MED07, MED08, Swiss AIPS
@@ -125,7 +125,7 @@ Copy-Item .env.example .env
 | Variable | Default / purpose |
 |---|---|
 | `DATABASE_URL` | `postgresql+psycopg://healthcare:healthcare@localhost:5432/healthcare` |
-| `RAW_DATA_DIR` | `../source-data/raw` |
+| `RAW_DATA_DIR` | `../knowledge-base/raw` |
 | `LLM_PROVIDER` | `ollama` |
 | `LLM_MODEL` | `qwen3:30b-a3b` |
 | `LLM_TIMEOUT_SECONDS` | `300` |
@@ -197,7 +197,7 @@ After changes to medical history, **Reprocess now** reruns only the affected ana
 
 ### Add a new official source
 
-1. Place the file at `source-data/raw/<domain>/<SOURCE_ID>/` with a `metadata.json` describing its origin.
+1. Place the file at `knowledge-base/raw/<domain>/<SOURCE_ID>/` with a `metadata.json` describing its origin.
 2. Register source ID, domain, country, publisher, parser, and licence note in `backend/ingestion/registry.py`.
 3. Rebuild affected knowledge records and vectors:
 
@@ -218,7 +218,7 @@ Unchanged sources are skipped; modified files are versioned while older snapshot
 ---|---|
 | `503 Database schema missing` | Run `python -m alembic upgrade head` |
 | Cannot connect to PostgreSQL | Start the service and verify `DATABASE_URL` |
-| Source files not found | Check `source-data/raw/` or `RAW_DATA_DIR` |
+| Source files not found | Check `knowledge-base/raw/` or `RAW_DATA_DIR` |
 | No semantic search matches | Install `requirements-semantic.txt` and build embeddings |
 | AI summaries use template wording | Start Ollama, pull the model, and refresh the summary |
 | Doctor cannot invite patients | Approve the doctor via `backend.portal.doctors` CLI |
