@@ -1,6 +1,23 @@
 # HealthBridge: A Multi-Agent Framework with Neuro-Inspired Evidence Scoring for Cross-Border Healthcare (هيلث بريدج: إطار متعدد الوكلاء لتقييم الأدلة بنظام نقاط مستوحى من آليات الجهاز العصبي في الرعاية الصحية العابرة للحدود)
 
 
+## Overview
+
+<div align="justify">
+
+HealthBridge helps patients who travel abroad for treatment carry their medical history across borders. Patients keep
+their records and documents in one place; for each trip, four retrieval-augmented (RAG) agents compare those records
+with official sources of the destination country and explain what each medicine, procedure, lab value and travel rule
+means there, citing the source for every statement. Doctors see the findings in their own portal, and patients get a
+printable report in English or Arabic.
+
+A neuro-signal-inspired Dopamine–Cortisol controller then decides how far each finding can be trusted. Like the two
+signals in the brain, Dopamine ("go") rises with confirmed evidence and agreement between code and AI, while Cortisol
+("caution") rises with missing details, risk and contradictions. Together they decide whether a finding is shown as
+validated, shown with limitations or sent to a doctor for review.
+
+</div>
+
 ## The Problem
 
 <div align="justify">
@@ -31,28 +48,6 @@ regulations.
 - **Bilingual Reports** — Generate structured, printable health summaries in English or Arabic.
 - **Privacy by Design** — Run AI locally using open-source models, with patient-controlled permissions and auditable
   access.
-
-</div>
-
-## Project features
-
-<div align="justify">
-
-**Patient portal**
-- Account with a public Patient ID.
-- Medical history: medications (strength, form, dose, schedule), conditions, procedures, allergies and an allergy declaration.
-- Documents: upload PDFs and images and link them to records; text and values are extracted automatically on upload.
-- Trips: origin, destination, dates and purpose.
-- Travel Health Summary for each trip, with refresh and a printable report in English or Arabic.
-- Doctor Access: accept or decline invitations, revoke access at any time and see who viewed what.
-
-**Doctor portal**
-- Doctor sign-up with registration details; accounts start as "awaiting verification".
-- Dashboard: assigned patients, pending invitations and upcoming arrivals.
-- Patient Records: invite a patient by Patient ID and browse their medications, conditions, procedures, allergies and documents.
-- Finding cards: origin vs destination comparison, allergy check, what to verify, sources and the Dopamine–Cortisol assessment.
-- Flags: destination rules for the trip, with sources, and the complete patient report.
-- Knowledge Explorer: search the official sources behind every finding, by keyword or similar meaning, with a link to each original document.
 
 </div>
 
