@@ -4,8 +4,9 @@
 
 ## About the video
 
-The video walks through both portals using one synthetic case, a patient travelling from India to the UAE. The same
-flow works for other routes as well (for example UAE to Switzerland). All patient data shown is synthetic.
+The video walks through both portals using a synthetic scenario, a patient travelling from India to the UAE, that
+highlights 8 different cases: 3 medicines, 2 procedures and 3 documents (lab report, referral and prescription). The
+same flow works for other routes as well (for example UAE to Switzerland). All patient data shown is synthetic.
 
 ## Portal features
 
