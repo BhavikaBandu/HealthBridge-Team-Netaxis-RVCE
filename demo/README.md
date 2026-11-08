@@ -1,4 +1,4 @@
-# HealthBridge — Demo
+# HealthBridge — Demo Video
 
 **▶ Watch the demo video:** [Google Drive folder](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing)
 
