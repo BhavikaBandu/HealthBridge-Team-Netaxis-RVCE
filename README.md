@@ -1,25 +1,6 @@
 # HealthBridge: A Multi-Agent Framework with Neuro-Inspired Evidence Scoring for Cross-Border Healthcare (هيلث بريدج: إطار متعدد الوكلاء لتقييم الأدلة بنظام نقاط مستوحى من آليات الجهاز العصبي في الرعاية الصحية العابرة للحدود)
 
 
-## Overview
-
-<div align="justify">
-
-HealthBridge helps patients who travel abroad for treatment carry their medical history across borders. Patients keep
-their records and documents in one place; for each trip, four retrieval-augmented (RAG) agents compare those records
-with official sources of the destination country and explain what each medicine, procedure, lab value and travel rule
-means there, citing the source for every statement. Doctors see the findings in their own portal, and patients get a
-printable report in English or Arabic.
-
-A neuro-signal-inspired Dopamine–Cortisol controller then decides how far each finding can be trusted. Like the two
-signals in the brain, Dopamine ("go") rises with confirmed evidence and agreement between code and AI, while Cortisol
-("caution") rises with missing details, risk and contradictions. Together they decide whether a finding is shown as
-validated, shown with limitations or sent to a doctor for review.
-
-</div>
-
-## The Problem
-
 <div align="justify">
 
 **Your medical history shouldn't get lost in translation.**
