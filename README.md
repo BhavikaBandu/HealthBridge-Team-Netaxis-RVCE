@@ -1,31 +1,36 @@
 # HealthBridge: A Multi-Agent Framework with Neuro-Inspired Evidence Scoring for Cross-Border Healthcare (هيلث بريدج: إطار متعدد الوكلاء لتقييم الأدلة بنظام نقاط مستوحى من آليات الجهاز العصبي في الرعاية الصحية العابرة للحدود)
 
 
-## Overview
+## The Problem
 
 <div align="justify">
 
-HealthBridge helps patients who travel abroad for treatment carry their medical history across borders. Patients keep
-their records and documents in one place; for each trip, four retrieval-augmented (RAG) agents compare those records
-with official sources of the destination country and explain what each medicine, procedure, lab value and travel rule
-means there, citing the source for every statement. Doctors see the findings in their own portal, and patients get a
-printable report in English or Arabic.
+**Your medical history shouldn't get lost in translation.**
 
-A neuro-signal-inspired Dopamine–Cortisol controller then decides how far each finding can be trusted. Like the two
-signals in the brain, Dopamine ("go") rises with confirmed evidence and agreement between code and AI, while Cortisol
-("caution") rises with missing details, risk and contradictions. Together they decide whether a finding is shown as
-validated, shown with limitations or sent to a doctor for review.
+Healthcare changes across borders, but patient records don't adapt with it. Medicines have different names, lab results
+use different units, procedures follow different terminology, and medical regulations vary by country. This leaves
+patients unprepared and doctors navigating unfamiliar records.
 
 </div>
 
-## Problem statement
+## The Solution
 
 <div align="justify">
 
-Medical information does not translate cleanly across borders: medicines have different brand names, labs use different
-units, procedures are named differently, and rules on carrying medicines are spread across authorities that do not
-always agree. Patients and destination doctors have no reliable, source-backed way to bridge these differences before
-treatment.
+**HealthBridge is a privacy-first, multi-agent AI platform that makes medical information understandable, accessible,
+and actionable across borders.**
+
+Built for cross-border healthcare, it bridges the gap between patients, doctors, and destination-specific medical
+regulations.
+
+- **Unified Patient Portal** — Manage medical history, medications, allergies, documents, travel plans, and doctor access.
+- **AI-Powered Health Intelligence** — Map equivalent medications, standardize lab units, interpret procedures, and
+  identify destination-specific regulatory requirements.
+- **Doctor Decision Support** — Deliver source-backed findings, confidence assessments, regulatory alerts, and
+  searchable medical knowledge.
+- **Bilingual Reports** — Generate structured, printable health summaries in English or Arabic.
+- **Privacy by Design** — Run AI locally using open-source models, with patient-controlled permissions and auditable
+  access.
 
 </div>
 
