@@ -25,6 +25,15 @@ unfamiliar format.
 
 **Demo videos:** [watch on Google Drive](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing) (see [`demo/`](demo/README.md))
 
+## Team details
+
+| Name | Email |
+|---|---|
+| Dr. K. A. Nethravathi | nethravathika@rvce.edu.in |
+| Jaya Sri Jawahar Sripathy | jayasrijs.ec23@rvce.edu.in |
+| Bhavika Bandu | bhavikabandu.cs23@rvce.edu.in |
+| Shriyam Adya Sharma | shriyamadyas.cs23@rvce.edu.in |
+
 ## Repository layout
 
 ```
