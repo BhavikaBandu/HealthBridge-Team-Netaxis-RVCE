@@ -190,7 +190,7 @@ The table maps all seven Y.3172 node functions \[1\] to the implemented workflow
 
 \[4\] DHA, Artificial Intelligence in the Healthcare Policy, HISHD/PP-09, issue 01, 4.2–4.3, referenced edition.
 
-\[5\] UAE Federal Decree-Law 38/2024 governing medical products, pharmacists and pharmaceutical establishments, Articles 5, 38 and 76.[\[Source\]](https://uaelegislation.gov.ae/en/legislations/2751)
+\[5\] UAE Federal Decree-Law 38/2024 governing medical products, pharmacists and pharmaceutical establishments, Articles 5, 38 and 76.
 
 \[6\] EDE, Issue of Permit to Import Medicines for Personal Use, conditions and FAQ.
 
