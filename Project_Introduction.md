@@ -1,5 +1,8 @@
 # HealthBridge: A Multi-Agent Framework with Neuro-Inspired Evidence Scoring for Cross-Border Healthcare (هيلث بريدج: إطار متعدد الوكلاء لتقييم الأدلة بنظام نقاط مستوحى من آليات الجهاز العصبي في الرعاية الصحية العابرة للحدود)
 
+<p align="center"><code>AI for Good Sandbox Hackathon</code></p>
+
+> ⚠️ بيانات محاكاة لأغراض الهاكاثون فقط — every patient record in this repository is synthetic. No real or realistic patient data exists here.
 
 <div align="justify">
 
