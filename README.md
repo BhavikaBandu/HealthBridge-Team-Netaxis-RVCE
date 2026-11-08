@@ -29,6 +29,28 @@ treatment.
 
 </div>
 
+## Project features
+
+<div align="justify">
+
+**Patient portal**
+- Account with a public Patient ID.
+- Medical history: medications (strength, form, dose, schedule), conditions, procedures, allergies and an allergy declaration.
+- Documents: upload PDFs and images and link them to records; text and values are extracted automatically on upload.
+- Trips: origin, destination, dates and purpose.
+- Travel Health Summary for each trip, with refresh and a printable report in English or Arabic.
+- Doctor Access: accept or decline invitations, revoke access at any time and see who viewed what.
+
+**Doctor portal**
+- Doctor sign-up with registration details; accounts start as "awaiting verification".
+- Dashboard: assigned patients, pending invitations and upcoming arrivals.
+- Patient Records: invite a patient by Patient ID and browse their medications, conditions, procedures, allergies and documents.
+- Finding cards: origin vs destination comparison, allergy check, what to verify, sources and the Dopamine–Cortisol assessment.
+- Flags: destination rules for the trip, with sources, and the complete patient report.
+- Knowledge Explorer: search the official sources behind every finding, by keyword or similar meaning, with a link to each original document.
+
+</div>
+
 ## Agents
 
 | AI agent | RAG architecture | Main purpose |
@@ -58,23 +80,6 @@ healthbridge/
 ├── demo/           demo videos (link to the Google Drive folder)
 └── source-data/    the official source files the knowledge base is built from, with licence notes
 ```
-
-## Getting started
-
-<div align="justify">
-
-Full setup instructions are in **[`app/README.md`](app/README.md)**. In short:
-
-</div>
-
-<div align="justify">
-
-1. Install Python 3.11, PostgreSQL and Ollama.
-2. Create the database and install the Python packages.
-3. Build the knowledge base from `source-data/` (migrations, ingestion, embeddings).
-4. Download the local AI model and start the application.
-
-</div>
 
 ## Technology
 
