@@ -8,7 +8,7 @@
 
 <div align="justify">
 
-**Your medical history shouldn't get lost in translation.**
+**Your medical history shouldn't get lost during travel.**
 
 Healthcare changes across borders, but patient records don't adapt with it. Medicines have different names, lab results
 use different units, procedures follow different terminology, and medical regulations vary by country. This leaves
