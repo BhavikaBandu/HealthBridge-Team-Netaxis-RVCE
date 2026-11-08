@@ -2,7 +2,9 @@
 
 <p align="center"><code>AI for Good Sandbox Hackathon</code></p>
 
-> ⚠️ بيانات محاكاة لأغراض الهاكاثون فقط — every patient record in this repository is synthetic. No real or realistic patient data exists here.
+> ⚠️ HealthBridge is a research prototype, and its guidance should only be used in consultation with a qualified medical or legal professional, as appropriate.
+>
+> <p dir="rtl">هيلث بريدج نموذج أولي بحثي، ولا ينبغي استخدام إرشاداته إلا بعد استشارة مختص مؤهل في الطب أو القانون، بحسب الحالة.</p>
 
 <div align="justify">
 
