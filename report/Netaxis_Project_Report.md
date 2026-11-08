@@ -93,7 +93,7 @@ The expanded handoff contains 341 registered source files across the groups belo
 
 ### System architecture
 
-![HealthBridge system architecture](../HealthBridge_Architecture.png)
+![HealthBridge system architecture](HealthBridge_Architecture.png)
 
 *Figure 1. System Architecture: The three clinical agents run in parallel. Policy flags and scored clinical findings meet when HealthBridge assembles the handover.*
 
