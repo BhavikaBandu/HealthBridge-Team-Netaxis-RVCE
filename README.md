@@ -11,6 +11,8 @@ patients unprepared and doctors navigating unfamiliar records.
 
 </div>
 
+**Demo video:** [watch on Google Drive](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing) (see [`demo/`](demo/README.md))
+
 ## The Solution
 
 <div align="justify">
@@ -41,8 +43,6 @@ regulations.
 | 3. Medical Reports Agent | Clinical document RAG + deterministic normalisation | Interpret report terminology, extract findings and standardise laboratory units without changing the original clinical meaning. |
 | 4. Policy & Jurisdiction Agent | Hierarchical, jurisdiction-aware legal RAG | Retrieve applicable healthcare regulations using country, authority, document hierarchy, effective dates and legal provisions. |
 | 5. Translation Agent | LLM localisation with a fixed glossary and number-preservation checks | Translate patient and doctor reports into Arabic, right-to-left, without changing any value, strength or warning. |
-
-**Demo video:** [watch on Google Drive](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing) (see [`demo/`](demo/README.md))
 
 ## Team details
 
