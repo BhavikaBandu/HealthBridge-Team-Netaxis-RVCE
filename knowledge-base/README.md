@@ -1,5 +1,7 @@
 # Healthcare Knowledge Base — Full ZIP File and Source Inventory
 
+**⬇ Download the data:** [Healthcare_Data_Handoff_EXPANDED.zip](https://github.com/BhavikaBandu/HealthBridge-Team-Netaxis-RVCE/releases/download/knowledge-base-data/Healthcare_Data_Handoff_EXPANDED.zip) (511 MB, from the [Knowledge base data release](https://github.com/BhavikaBandu/HealthBridge-Team-Netaxis-RVCE/releases/tag/knowledge-base-data))
+
 **Archive:** `Healthcare_Data_Handoff_EXPANDED.zip`  
 **Inventory date:** 6 November 2026, India time  
 **Basis:** the actual ZIP directory, source registries, coverage table, eligible RAG export and validation reports. No new sources were added while preparing this inventory.
