@@ -64,7 +64,8 @@ regulations.
 healthbridge/
 ├── app/            the application: code, database migrations and setup instructions
 ├── demo/           demo videos (link to the Google Drive folder)
-└── knowledge-base/ the official source files the knowledge base is built from, with licence notes
+└──knowledge-base/ the official source files the knowledge base is built from, with licence notes
+└── Report/ The technical report as per ITU format detailing the project
 ```
 
 ## Technology
