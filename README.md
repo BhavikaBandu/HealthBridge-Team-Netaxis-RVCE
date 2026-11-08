@@ -23,11 +23,14 @@ unfamiliar format.
 - **Reports:** printable patient and doctor reports in English or Arabic.
 - **Private by design:** the AI runs locally on an open-source model; patients control access and every view is logged.
 
+**Demo videos:** [watch on Google Drive](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing) (see [`demo/`](demo/README.md))
+
 ## Repository layout
 
 ```
 healthbridge/
 ├── app/            the application: code, database migrations and setup instructions
+├── demo/           demo videos (link to the Google Drive folder)
 └── source-data/    the official source files the knowledge base is built from, with licence notes
 ```
 
