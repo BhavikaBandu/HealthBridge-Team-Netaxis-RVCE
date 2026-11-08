@@ -1,41 +1,47 @@
 # HealthBridge: A Multi-Agent Framework with Neuro-Inspired Evidence Scoring for Cross-Border Healthcare (هيلث بريدج: إطار متعدد الوكلاء لتقييم الأدلة بنظام نقاط مستوحى من آليات الجهاز العصبي في الرعاية الصحية العابرة للحدود)
 
 
-## The problem
+## Overview
 
 <div align="justify">
 
-Patients who travel abroad for treatment carry medical information that does not translate cleanly across borders.
-The same medicine has different brand names in each country (Crocin Advance in India, Panadol Advance in the UAE).
-Laboratories report results in different units (glucose in mg/dL in India, mmol/L in the UAE). Procedures are described
-differently by each provider. Rules on carrying medicines, especially controlled ones such as tramadol, are spread
-across several authorities that do not always agree. Destination doctors receive all of this late, in PDFs, and in an
-unfamiliar format.
+HealthBridge helps patients who travel abroad for treatment carry their medical history across borders. Patients keep
+their records and documents in one place; for each trip, four retrieval-augmented (RAG) agents compare those records
+with official sources of the destination country and explain what each medicine, procedure, lab value and travel rule
+means there, citing the source for every statement. A Dopamine–Cortisol controller then scores every finding, balancing
+the evidence for it (Dopamine) against gaps and risks (Cortisol), and decides whether it is shown as validated, shown
+with limitations or sent to a doctor for review. Doctors see the findings in their own portal, and patients get a
+printable report in English or Arabic.
 
 </div>
 
-## What HealthBridge does
+## Problem statement
 
 <div align="justify">
 
-- **Patient portal:** patients keep their medicines, conditions, procedures, allergies and documents in one place,
-  plan their trips and decide which doctors can see their records.
-- **Travel Health Summary:** for every trip, AI agents compare the patient's records with official destination sources:
-  which UAE product matches each medicine, what each procedure is called at the destination, lab values in UAE units,
-  and which rules and documents apply. Every statement cites its source.
-- **Doctor portal:** invited doctors see a finding card for each medicine, procedure and document, the destination
-  flags, and a confidence assessment for every finding. The Knowledge Explorer lets them search the official sources
-  directly.
-- **Reports:** printable patient and doctor reports in English or Arabic.
-- **Private by design:** the AI runs locally on an open-source model; patients control access and every view is logged.
+Medical information does not translate cleanly across borders: medicines have different brand names, labs use different
+units, procedures are named differently, and rules on carrying medicines are spread across authorities that do not
+always agree. Patients and destination doctors have no reliable, source-backed way to bridge these differences before
+treatment.
 
 </div>
+
+## Agents
 
 <div align="justify">
 
-**Demo videos:** [watch on Google Drive](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing) (see [`demo/`](demo/README.md))
+- **Medicine Agent (RAG + LLM):** matches each medicine to a destination product with the same ingredients and strength,
+  and checks it against the patient's allergies.
+- **Procedure Agent (RAG + LLM):** finds the destination service that matches each procedure (scan type, body area,
+  protocol), even when it is named differently.
+- **Report Agent (RAG + LLM):** reads uploaded documents and converts lab values into the units used at the destination.
+- **Policy Agent (RAG + LLM):** checks the destination's rules for carrying each medicine (controlled status, documents,
+  quantity limits) and picks the safer rule when sources disagree.
+- **Translation Agent (LLM):** translates the patient and doctor reports into Arabic.
 
 </div>
+
+**Demo video:** [watch on Google Drive](https://drive.google.com/drive/folders/1fHM1TJb_3J6om1189Yb6z32ErhwMCkEG?usp=sharing) (see [`demo/`](demo/README.md))
 
 ## Team details
 
