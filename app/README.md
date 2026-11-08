@@ -127,7 +127,7 @@ Copy-Item .env.example .env
 |---|---|
 | `DATABASE_URL` | `postgresql+psycopg://healthcare:healthcare@localhost:5432/healthcare` |
 | `RAW_DATA_DIR` | `../source-data/raw` |
-| `LLM_PROVIDER` | `ollama` (`mock` for code-generated template wording) |
+| `LLM_PROVIDER` | `ollama` |
 | `LLM_MODEL` | `qwen3:30b-a3b` |
 | `LLM_TIMEOUT_SECONDS` | `300` |
 | `UPLOAD_DIR` | `data/private_uploads` |
