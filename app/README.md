@@ -1,66 +1,72 @@
 # HealthBridge — Application
 
-This folder contains the HealthBridge application: patient and doctor portals, the knowledge base and its retrieval,
-five AI agents, the Dopamine–Cortisol controller and the LangGraph pipeline. For what HealthBridge is and why, see the
-[main README](../README.md).
+**Local-first, evidence-grounded cross-border healthcare intelligence.**
 
-> Research prototype. It does not diagnose, prescribe, approve medicine substitutions or grant permission to carry
-> medicines. Use synthetic data only.
+This directory contains the patient and doctor portals, official-source knowledge base, five AI agents, LangGraph orchestration, and the Dopamine–Cortisol confidence controller. For the project vision, see the [main README](../README.md).
 
----
+> **Research prototype:** Not for diagnosis, prescribing, approving medicine substitutions, or authorizing travel with medicines. Use synthetic data only.
 
-## 1. Prerequisites
+## Contents
 
-| Requirement | Notes |
+- [Architecture & tech stack](#architecture--tech-stack)
+- [Getting started](#getting-started)
+- [Run the application](#run-the-application)
+- [First-use walkthrough](#first-use-walkthrough)
+- [Developer reference](#developer-reference)
+- [Troubleshooting](#troubleshooting)
+
+## Architecture & tech stack
+
+**Workflow:** Patient records + destination → domain-specific evidence retrieval → specialized AI agents → Dopamine–Cortisol confidence assessment → doctor findings and bilingual reports.
+
+| Layer | Implementation |
 |---|---|
-| **Python 3.11** | `py -3.11 --version` (Windows) or `python3.11 --version` |
-| **PostgreSQL 16 or 17** | Running locally on port 5432, with pgAdmin or `psql`. pgvector is **not** needed. |
-| **Ollama** | https://ollama.com — runs the local language model |
-| **Git** | To clone the repository |
-| **Disk / memory** | About 20 GB free (≈18 GB language model + ≈240 MB embedding model). 32 GB RAM, or a GPU with 24 GB, recommended. |
+| Web application | FastAPI, Jinja2, CSS, JavaScript |
+| Orchestration | LangGraph; five agents and confidence controller |
+| Local LLM | Ollama (`qwen3:30b-a3b` by default); configurable provider |
+| Knowledge retrieval | Official-source ingestion, keyword and semantic search, multilingual embeddings |
+| Data | PostgreSQL 16/17, SQLAlchemy/psycopg, Alembic migrations |
+| Reports | Printable English and Arabic reports |
 
-## 2. Get the code
+<details>
+<summary><strong>Project directory structure</strong></summary>
+
+```text
+app/
+├── backend/
+│   ├── main.py             FastAPI entry point
+│   ├── config.py           Environment settings
+│   ├── models.py           Knowledge-base models
+│   ├── ai/                 Agents, LangGraph, controller, reporting, translation
+│   │   └── providers/      LLM provider implementations
+│   ├── api/                Search and evidence APIs
+│   ├── ingestion/          Source registry, parsers, ingestion pipeline
+│   ├── portal/             Portal routes, security, document handling
+│   └── retrieval/          Domain retrievers, embeddings, search
+├── frontend/
+│   ├── templates/          Patient, doctor and report pages
+│   └── static/             CSS and JavaScript
+├── migrations/             Alembic migrations
+└── data/                   Runtime files (not committed)
+    ├── processed/          Snapshots and embedding model
+    └── private_uploads/    Patient documents
+```
+</details>
+
+## Getting started
+
+### 1. Prerequisites
+
+- **Python 3.11**, **Git**, **PostgreSQL 16 or 17** (local port `5432`), and [Ollama](https://ollama.com).
+- Approximately **20 GB free disk space** (around 18 GB for the LLM and 240 MB for embeddings). **32 GB RAM or a 24 GB GPU** recommended.
+- PostgreSQL **pgvector is not required**.
+
+### 2. Clone and install
 
 ```bash
 git clone <repository-url> healthbridge
 cd healthbridge/app
 ```
-
-All commands below are run from the `app/` folder.
-
-## 3. Bring in the source data
-
-The knowledge base is built from the official source files in `source-data/raw/` (next to `app/`). The application
-reads them from the folder set by `RAW_DATA_DIR` in `.env` (default `../source-data/raw`).
-
-- **Cloned with the repository:** nothing to do.
-- **Downloaded separately:** unzip it next to `app/` so the layout is `healthbridge/app` and `healthbridge/source-data`,
-  or put it anywhere and set `RAW_DATA_DIR` to its `raw` folder.
-
-Expected layout:
-
-```
-source-data/
-├── manifests/              source catalogue
-└── raw/
-    ├── medicines/          MED01, MED02, MED07, MED08, Swiss AIPS
-    ├── medical_reports/    LAB01, LAB02, LAB03, UCUM
-    ├── procedures/         PROC04, PROC05-K, PROC05-R
-    └── policies/           AE11, AE12, AE26, AE27, AE28, AE33
-```
-
-## 4. Create the database
-
-Open pgAdmin's Query Tool or `psql` as the PostgreSQL administrator and run:
-
-```sql
-CREATE USER healthcare WITH PASSWORD 'healthcare';
-CREATE DATABASE healthcare OWNER healthcare;
-```
-
-These are local development credentials. If you choose others, change `DATABASE_URL` in `.env` (step 6).
-
-## 5. Create the Python environment and install packages
 
 **Windows (PowerShell):**
 
@@ -82,156 +88,158 @@ python -m pip install -r requirements.txt
 python -m pip install -r requirements-semantic.txt
 ```
 
-`requirements-semantic.txt` adds fastembed and NumPy for similar-meaning search.
+The semantic requirements install FastEmbed and NumPy for similarity search. All subsequent commands run from `app/` with the virtual environment active.
 
-## 6. Configure
+### 3. Add the official source files
 
-```powershell
-Copy-Item .env.example .env        # macOS / Linux: cp .env.example .env
+Source files belong in `../source-data/raw/` relative to `app/`. If provided separately, extract them beside `app/` or configure `RAW_DATA_DIR` to point to the extracted `raw/` directory.
+
+```text
+source-data/
+├── manifests/
+└── raw/
+    ├── medicines/          MED01, MED02, MED07, MED08, Swiss AIPS
+    ├── medical_reports/    LAB01, LAB02, LAB03, UCUM
+    ├── procedures/         PROC04, PROC05-K, PROC05-R
+    └── policies/           AE11, AE12, AE26, AE27, AE28, AE33
 ```
 
-| Setting | Default | Meaning |
-|---|---|---|
-| `DATABASE_URL` | `postgresql+psycopg://healthcare:healthcare@localhost:5432/healthcare` | Database from step 4 |
-| `RAW_DATA_DIR` | `../source-data/raw` | Folder with the official source files (step 3) |
-| `LLM_PROVIDER` | `ollama` | Local model through Ollama (`mock` = template wording, no AI) |
-| `LLM_MODEL` | `qwen3:30b-a3b` | Ollama model name |
-| `LLM_TIMEOUT_SECONDS` | `300` | Time allowed per AI call |
-| `UPLOAD_DIR` | `data/private_uploads` | Where patient documents are stored (never committed) |
-| `COOKIE_SECURE` | `false` | Set `true` when served over HTTPS |
+### 4. Create the database
 
-Never commit `.env`. To check the whole setup at any point:
+In pgAdmin Query Tool or `psql`, as PostgreSQL administrator:
 
-```powershell
+```sql
+CREATE USER healthcare WITH PASSWORD 'healthcare';
+CREATE DATABASE healthcare OWNER healthcare;
+```
+
+These credentials are for **local development only**. Change them and update `DATABASE_URL` for other environments.
+
+### 5. Configure environment
+
+```bash
+# Windows PowerShell
+Copy-Item .env.example .env
+# macOS / Linux: cp .env.example .env
+```
+
+| Variable | Default / purpose |
+|---|---|
+| `DATABASE_URL` | `postgresql+psycopg://healthcare:healthcare@localhost:5432/healthcare` |
+| `RAW_DATA_DIR` | `../source-data/raw` |
+| `LLM_PROVIDER` | `ollama` (`mock` for code-generated template wording) |
+| `LLM_MODEL` | `qwen3:30b-a3b` |
+| `LLM_TIMEOUT_SECONDS` | `300` |
+| `UPLOAD_DIR` | `data/private_uploads` |
+| `COOKIE_SECURE` | `false`; set `true` when using HTTPS |
+
+**Never commit `.env` or patient uploads.** Check configuration with:
+
+```bash
 python -m backend.check_env
 ```
 
-## 7. Build the database and knowledge base
+## Run the application
 
-Run these once, in this order (virtual environment active):
+### 1. Initialize tables and knowledge retrieval
 
-```powershell
-python -m alembic upgrade head              # 1. create all tables
-python -m backend.ingestion.pipeline        # 2. ingest the official sources
-python -m backend.retrieval.embeddings      # 3. build the search embeddings
+Run these in order:
+
+```bash
+python -m alembic upgrade head
+python -m backend.ingestion.pipeline
+python -m backend.retrieval.embeddings
 ```
 
-1. **Tables:** Alembic applies the migrations in `migrations/versions/`.
-2. **Ingestion:** reads every source in `source-data/raw/`, stores a hashed copy in `data/processed/snapshots/`, and creates
-   about 31,000 searchable records and the structured fact tables (medicine products and ingredients, lab references,
-   procedure terms, policy clauses, controlled substances). Re-running is safe: unchanged files are skipped.
-3. **Embeddings:** downloads the multilingual embedding model on first run into `data/processed/models/` and computes a
-   384-dimension vector for every record. Only missing vectors are computed. This can take several minutes on a CPU.
+The ingestion step processes official sources into approximately **31,000 searchable records** and structured fact tables, retaining hashed source snapshots. Re-running skips unchanged files. Embeddings are **384-dimensional**; the multilingual embedding model downloads on first use, and only missing vectors are computed.
 
-## 8. Set up the local AI model
+### 2. Start the local model
 
-Install Ollama, make sure it is running (it serves on `http://localhost:11434`), then download the model once:
+With Ollama installed and running at `http://localhost:11434`:
 
 ```bash
 ollama pull qwen3:30b-a3b
 ```
 
-If Ollama is not running, HealthBridge still works: the agents fall back to template wording written by code.
+If Ollama is unavailable, agents fall back to code-generated template wording.
 
-## 9. Run
+### 3. Launch the server
 
-```powershell
+```bash
 python -m uvicorn backend.main:app --reload
 ```
 
-| Address | Page |
+| URL | Purpose |
 |---|---|
-| http://127.0.0.1:8000 | Sign in / sign up (Patient or Doctor) |
+| http://127.0.0.1:8000 | Patient / doctor sign-in and sign-up |
 | http://127.0.0.1:8000/travel-summary | Patient Travel Health Summary |
 | http://127.0.0.1:8000/doctor/patients | Doctor Patient Records |
-| http://127.0.0.1:8000/doctor/knowledge | Knowledge Explorer (doctors) |
-| http://127.0.0.1:8000/docs | API documentation |
+| http://127.0.0.1:8000/doctor/knowledge | Doctor Knowledge Explorer |
+| http://127.0.0.1:8000/docs | Interactive API documentation |
 
-## 10. First use
+## First-use walkthrough
 
-The database starts with no users. To try the full flow:
+1. **Register a patient** at `/signup` and note the generated Patient ID (`HC-XXXXXXXX`).
+2. **Register a doctor.** New doctor accounts await verification; the Knowledge Explorer is available before approval, but patient access is restricted.
+3. **Approve the doctor** from the command line (no admin web page):
 
-1. **Sign up a patient** at `/signup`. The patient gets a Patient ID (for example `HC-XXXXXXXX`).
-2. **Sign up a doctor** with "Doctor" sign-up. Doctor accounts start as *awaiting verification*: they can sign in and
-   use the Knowledge Explorer, but patient features stay locked until approval.
-3. **Approve the doctor** from the command line (there is no admin page):
-
-   ```powershell
+   ```bash
    python -m backend.portal.doctors list
    python -m backend.portal.doctors approve doctor@example.com
    ```
 
-4. **As the doctor**, open Patient Records and invite the patient by Patient ID.
-5. **As the patient**, accept the invitation under Doctor Access, add medicines, procedures, allergies and documents,
-   then add a trip (for example India → United Arab Emirates).
-6. Adding a trip runs the analysis in the background (about a minute). Open **Travel Health Summary**, choose the trip
-   and generate a report in English or Arabic. The doctor sees the finding cards under each record and the Flags page.
+4. **Connect doctor and patient:** Doctor invites the patient using the Patient ID; patient accepts under **Doctor Access**.
+5. **Add patient information:** Medicines, procedures, allergies, documents, and a trip (e.g., India → United Arab Emirates).
+6. **Review results:** Adding a trip starts background analysis (roughly one minute). The patient opens **Travel Health Summary** and generates an English or Arabic report. The doctor reviews record-level finding cards and destination flags.
 
-After editing medical history, the patient is offered **Reprocess now**; only the changed parts are re-run.
+After changes to medical history, **Reprocess now** reruns only the affected analysis components.
 
-## 11. Useful commands
+## Developer reference
 
-| Command | Purpose |
+### Useful commands
+
+| Command | Action |
 |---|---|
-| `python -m backend.ai.analysis --patient <PATIENT_ID>` | Re-run the changed parts of the patient's next trip |
-| `python -m backend.ai.analysis --patient <PATIENT_ID> --full` | Re-run every agent for that trip |
-| `python -m backend.portal.doctors list` / `approve <email>` / `reject <email>` | Review doctor accounts |
-| `python -m backend.ai.snapshot save <name> --patient <PATIENT_ID>` | Save a named copy of a trip analysis |
-| `python -m backend.ai.snapshot restore <name> --patient <PATIENT_ID>` | Restore a saved copy |
-| `python -m backend.check_env` | Check Python packages, database and configuration |
+| `python -m backend.check_env` | Verify dependencies, database, configuration |
+| `python -m backend.ai.analysis --patient <PATIENT_ID>` | Reanalyze changed parts of next trip |
+| `python -m backend.ai.analysis --patient <PATIENT_ID> --full` | Rerun all agents for next trip |
+| `python -m backend.portal.doctors list` | List doctor accounts |
+| `python -m backend.portal.doctors approve <email>` | Approve a doctor |
+| `python -m backend.portal.doctors reject <email>` | Reject a doctor |
+| `python -m backend.ai.snapshot save <name> --patient <PATIENT_ID>` | Save a trip-analysis snapshot |
+| `python -m backend.ai.snapshot restore <name> --patient <PATIENT_ID>` | Restore a snapshot |
 
-## 12. Code structure
+### Add a new official source
 
-```
-app/
-├── backend/
-│   ├── main.py            FastAPI application
-│   ├── config.py          settings read from .env
-│   ├── models.py          knowledge-base tables
-│   ├── ai/                five agents, Dopamine–Cortisol controller, LangGraph pipeline, fingerprints,
-│   │   │                  report builder and translation, analysis runner, snapshot tool
-│   │   └── providers/     LLM providers (ollama.py)
-│   ├── api/               knowledge search and evidence retrieval APIs
-│   ├── ingestion/         source registry, parsers, terminology, ingestion pipeline
-│   ├── portal/            portals: routes, page rendering, models, security, document extraction, doctor review tool
-│   └── retrieval/         keyword and similar-meaning search, embeddings, per-domain evidence retrievers
-├── frontend/
-│   ├── templates/         Jinja2 pages for both portals and the printable report
-│   └── static/            CSS and JavaScript
-├── migrations/            Alembic database migrations
-└── data/                  created at runtime, never committed
-    ├── processed/         source snapshots and the embedding model
-    └── private_uploads/   patient documents
-```
+1. Place the file at `source-data/raw/<domain>/<SOURCE_ID>/` with a `metadata.json` describing its origin.
+2. Register source ID, domain, country, publisher, parser, and licence note in `backend/ingestion/registry.py`.
+3. Rebuild affected knowledge records and vectors:
 
-## 13. Adding a new source
-
-1. Put the file in `source-data/raw/<domain>/<SOURCE_ID>/` with a `metadata.json` describing where it came from.
-2. Register it in `backend/ingestion/registry.py` (source ID, domain, country, publisher, parser, licence note).
-3. Re-run ingestion and then embeddings:
-
-   ```powershell
+   ```bash
    python -m backend.ingestion.pipeline
    python -m backend.retrieval.embeddings
    ```
 
-Unchanged sources are skipped; a changed file becomes a new version and the old one is kept.
+Unchanged sources are skipped; modified files are versioned while older snapshots are retained.
 
-## 14. Configuration notes
+### Change AI or embedding models
 
-- **Different language model:** set `LLM_MODEL` to any Ollama model you have pulled (larger Qwen3 models give better
-  wording and Arabic). `OLLAMA_URL` and `OLLAMA_NUM_CTX` change the server address and context size.
-- **Another provider:** add a module in `backend/ai/providers/` exposing
-  `generate(system_prompt, payload, schema, model, timeout)` and set `LLM_PROVIDER` to its name.
-- **Embedding model:** `EMBEDDING_MODEL` changes the model; rebuild embeddings afterwards.
+- **Switch Ollama model:** Pull another model and update `LLM_MODEL` in `.env`.
+- **Switch LLM provider:** Add a provider under `backend/ai/providers/` implementing `generate(system_prompt, payload, schema, model, timeout)`; set `LLM_PROVIDER` to its name.
+- **Tune Ollama:** Configure `OLLAMA_URL` and `OLLAMA_NUM_CTX`.
+- **Change embedding model:** Set `EMBEDDING_MODEL`, then rebuild embeddings.
 
-## 15. Troubleshooting
+## Troubleshooting
 
-| Problem | Fix |
+| Symptom | Resolution |
 |---|---|
-| Pages return 503 "Database schema missing" | Run `python -m alembic upgrade head` |
-| Cannot connect to the database | Start the PostgreSQL service and check `DATABASE_URL` in `.env` |
-| Ingestion cannot find source files | Check that `source-data/raw/` is next to `app/`, or set `RAW_DATA_DIR` |
-| Knowledge Explorer finds no "similar meaning" results | Install `requirements-semantic.txt` and run `python -m backend.retrieval.embeddings` |
-| Summaries use plain template wording | Start Ollama and run `ollama pull qwen3:30b-a3b`; then press Refresh summary |
-| Doctor sees "awaiting verification" and cannot invite patients | Approve the account with `python -m backend.portal.doctors approve <email>` |
+| `503 Database schema missing` | Run `python -m alembic upgrade head` |
+| Cannot connect to PostgreSQL | Start the service and verify `DATABASE_URL` |
+| Source files not found | Check `source-data/raw/` or `RAW_DATA_DIR` |
+| No semantic search matches | Install `requirements-semantic.txt` and build embeddings |
+| AI summaries use template wording | Start Ollama, pull the model, and refresh the summary |
+| Doctor cannot invite patients | Approve the doctor via `backend.portal.doctors` CLI |
+
+---
+
+For the problem statement, solution, and project demos, return to the [HealthBridge main README](../README.md).
